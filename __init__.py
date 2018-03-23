@@ -10,6 +10,7 @@ from requests import RequestException
 
 FEED_URL = "https://birminghamio-alexa.surge.sh/bio.json"
 
+
 class BirminghamIOSkill(MycroftSkill):
     def __init__(self):
         super(BirminghamIOSkill, self).__init__(name="BirminghamIOSkill")
@@ -24,8 +25,10 @@ class BirminghamIOSkill(MycroftSkill):
             if events:
                 self.speak_dialog("from.the.calendar")
                 for event in events:
-                    if self.stop_requested: break
-                    self.speak_dialog("meeting", data={"meeting": event.get("mainText", "An unknown meeting")})
+                    if self.stop_requested:
+                        break
+                    self.speak_dialog("meeting", data={"meeting": event.get(
+                        "mainText", "An unknown meeting")})
             else:
                 self.speak_dialog("no.events")
         except:
@@ -35,7 +38,6 @@ class BirminghamIOSkill(MycroftSkill):
         self.stop_requested = True
         return False
 
-# The "create_skill()" method is used to create an instance of the skill.
-# Note that it's outside the class itself.
+
 def create_skill():
     return BirminghamIOSkill()
